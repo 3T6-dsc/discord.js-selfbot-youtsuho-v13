@@ -3,7 +3,7 @@
 > 
 > **This project is no longer actively maintained and this repository has been archived.**
 >
-> However, the project is being continued unofficially by **[Youtsuho](https://github.com/Youtsuho)**.
+> However, the project is being continued unofficially by **[Youtsuho](https://github.com/3T6-dsc)**.
 >
 > You can read the full announcement [here](https://github.com/aiko-chan-ai/discord.js-selfbot-v13/discussions/1743)
 
@@ -59,7 +59,7 @@
 > **Node.js 20.18.0 or newer is required**
 
 ```sh-session
-npm install discord.js-selfbot-v13@latest
+npm install discord.js-selfbot-youtsuho-v13@latest
 ```
 
 ## Example
