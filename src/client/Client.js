@@ -374,6 +374,42 @@ class Client extends BaseClient {
   }
 
   /**
+   * Sets the client configuration to appear as a Mobile device (Phone).
+   * Changes the WebSocket properties to reflect an Android client.
+   * This affects the "Online via Mobile" indicator on Discord.
+   * @returns {this}
+   */
+  setMobileIndicator() {
+    this.options.ws.properties.$os = 'android';
+    this.options.ws.properties.$browser = 'Discord Android';
+    this.options.ws.properties.$device = 'Discord Android';
+    return this;
+  }
+
+  /**
+   * Sets the client configuration to appear as a Desktop client.
+   * Changes the WebSocket properties to reflect a standard Desktop client.
+   * @returns {this}
+   */
+  setDesktopIndicator() {
+    this.options.ws.properties.$os = process.platform === 'win32' ? 'Windows' : process.platform;
+    this.options.ws.properties.$browser = 'Discord Client';
+    this.options.ws.properties.$device = 'Discord Client';
+    return this;
+  }
+
+  /**
+   * Sets the client configuration to appear as a Web client (Browser).
+   * @returns {this}
+   */
+  setWebIndicator() {
+    this.options.ws.properties.$os = process.platform === 'win32' ? 'Windows' : process.platform;
+    this.options.ws.properties.$browser = 'Discord Web';
+    this.options.ws.properties.$device = 'Discord Web';
+    return this;
+  }
+
+  /**
    * Options used when fetching an invite from Discord.
    * @typedef {Object} ClientFetchInviteOptions
    * @property {Snowflake} [guildScheduledEventId] The id of the guild scheduled event to include with

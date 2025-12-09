@@ -397,6 +397,32 @@ class TextBasedChannel {
   }
 
   /**
+   * Simulates typing in the channel for a duration based on the content length.
+   * @param {string} content The content to simulate typing for
+   * @returns {Promise<void>} Resolves after the typing duration
+   * @example
+   * // Simulate typing for a message
+   * await channel.simulateTyping('Hello world!');
+   * channel.send('Hello world!');
+   */
+  async simulateTyping(content) {
+    if (!content || typeof content !== 'string') return;
+    
+    // Average typing speed: ~300 characters per minute (50-60 WPM)
+    const charPerMinute = 300; 
+    const msPerChar = 60000 / charPerMinute;
+    const duration = content.length * msPerChar;
+    
+    // Add some randomness (+- 20%) to make it look more natural
+    const variance = duration * 0.2;
+    const finalDuration = Math.max(1000, duration + (Math.random() * variance * 2 - variance)); // Minimum 1 second
+
+    await this.sendTyping();
+    // Cap the waiting time at 10 seconds (Discord typing status timeout)
+    await new Promise(r => setTimeout(r, Math.min(finalDuration, 10000))); 
+  }
+
+  /**
    * Creates a Message Collector.
    * @param {MessageCollectorOptions} [options={}] The options to pass to the collector
    * @returns {MessageCollector}
@@ -502,7 +528,7 @@ class TextBasedChannel {
   }
 
   static applyToClass(structure, full = false, ignore = []) {
-    const props = ['send'];
+    const props = ['send', 'simulateTyping'];
     if (full) {
       props.push(
         'sendSlash',
