@@ -1,12 +1,3 @@
-> [!IMPORTANT]
-> ## Project Archival
-> 
-> **This project is no longer actively maintained and this repository has been archived.**
->
-> However, the project is being continued unofficially by **[Youtsuho](https://github.com/3T6-dsc)**.
->
-> You can read the full announcement [here](https://github.com/aiko-chan-ai/discord.js-selfbot-v13/discussions/1743)
-
 <div align="center">
   <br />
   <p>
@@ -14,24 +5,26 @@
   </p>
 </div>
 
-> [!CAUTION]
-> **The use of this module under a different name on NPM (or another source besides this Github) is not associated with this library.**
-> **When using these libraries, you accept the risk of exposing your Discord Token.**
-
-## About
-
-<strong>Welcome to `discord.js-selfbot-v13@v3.7`, based on `discord.js@13.17` and backport `discord.js@14.21.0`</strong>
-
-- discord.js-selfbot-v13 is a [Node.js](https://nodejs.org) module that allows user accounts to interact with the Discord API v9.
-
+> [!IMPORTANT]
+> ## Active Maintenance
+> 
+> **This project is the active continuation of `discord.js-selfbot-v13`.**
+>
+> It is now maintained by **[Youtsuho](https://github.com/3T6-dsc)**. The original repository is archived, but development continues here.
 
 <div align="center">
   <p>
-    <a href="https://www.npmjs.com/package/discord.js-selfbot-v13"><img src="https://img.shields.io/npm/v/discord.js-selfbot-v13.svg" alt="npm version" /></a>
-    <a href="https://www.npmjs.com/package/discord.js-selfbot-v13"><img src="https://img.shields.io/npm/dt/discord.js-selfbot-v13.svg" alt="npm downloads" /></a>
-    <a href="https://github.com/aiko-chan-ai/discord.js-selfbot-v13/actions"><img src="https://github.com/aiko-chan-ai/discord.js-selfbot-v13/actions/workflows/lint.yml/badge.svg" alt="Tests status" /></a>
+    <a href="https://www.npmjs.com/package/discord.js-selfbot-youtsuho-v13"><img src="https://img.shields.io/npm/v/discord.js-selfbot-youtsuho-v13.svg" alt="npm version" /></a>
+    <a href="https://www.npmjs.com/package/discord.js-selfbot-youtsuho-v13"><img src="https://img.shields.io/npm/dt/discord.js-selfbot-youtsuho-v13.svg" alt="npm downloads" /></a>
+    <a href="https://github.com/3T6-dsc/discord.js-selfbot-youtsuho-v13/actions"><img src="https://github.com/3T6-dsc/discord.js-selfbot-youtsuho-v13/actions/workflows/lint.yml/badge.svg" alt="Tests status" /></a>
   </p>
 </div>
+
+## About
+
+<strong>Welcome to `discord.js-selfbot-youtsuho-v13`, based on `discord.js@13.17` and backport `discord.js@14.21.0`</strong>
+
+- discord.js-selfbot-youtsuho-v13 is a [Node.js](https://nodejs.org) module that allows user accounts to interact with the Discord API v9.
 
 > [!WARNING]
 > **I don't take any responsibility for blocked Discord accounts that used this module.**
@@ -41,7 +34,7 @@
 
 ### <strong>[Document Website](https://discordjs-self-v13.netlify.app/)</strong>
 
-### <strong>[Example Code](https://github.com/aiko-chan-ai/discord.js-selfbot-v13/tree/main/examples)</strong>
+### <strong>[Example Code](https://github.com/3T6-dsc/discord.js-selfbot-youtsuho-v13/tree/main/examples)</strong>
 
 ## Features (User)
 - [x] Message
@@ -65,7 +58,7 @@ npm install discord.js-selfbot-youtsuho-v13@latest
 ## Example
 
 ```js
-const { Client } = require('discord.js-selfbot-v13');
+const { Client } = require('discord.js-selfbot-youtsuho-v13');
 const client = new Client();
 
 client.on('ready', async () => {
@@ -111,7 +104,7 @@ console.log(`%cYou now have your token in the clipboard!`, 'font-size: 16px');
 - See [the contribution guide](https://github.com/discordjs/discord.js/blob/main/.github/CONTRIBUTING.md) if you'd like to submit a PR.
 
 ## Need help?
-Github Discussion: [Here](https://github.com/aiko-chan-ai/discord.js-selfbot-v13/discussions)
+Github Discussion: [Here](https://github.com/3T6-dsc/discord.js-selfbot-youtsuho-v13/discussions)
 
 ## Credits
 - [Discord.js](https://github.com/discordjs/discord.js)
@@ -120,7 +113,3 @@ Github Discussion: [Here](https://github.com/aiko-chan-ai/discord.js-selfbot-v13
 
 - 📘 [***aiko-chan-ai/DiscordBotClient***](https://github.com/aiko-chan-ai/DiscordBotClient) <br/>
   A patched version of discord, with bot login support
-
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=aiko-chan-ai/discord.js-selfbot-v13&type=Date)](https://star-history.com/#aiko-chan-ai/discord.js-selfbot-v13&Date)
