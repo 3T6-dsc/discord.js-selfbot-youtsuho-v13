@@ -3,6 +3,8 @@
 > 
 > **This project is no longer actively maintained and this repository has been archived.**
 >
+> However, the project is being continued unofficially by **[Youtsuho](https://github.com/Youtsuho)**.
+>
 > You can read the full announcement [here](https://github.com/aiko-chan-ai/discord.js-selfbot-v13/discussions/1743)
 
 <div align="center">
