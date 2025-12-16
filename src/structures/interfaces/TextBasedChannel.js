@@ -407,19 +407,19 @@ class TextBasedChannel {
    */
   async simulateTyping(content) {
     if (!content || typeof content !== 'string') return;
-    
+
     // Average typing speed: ~300 characters per minute (50-60 WPM)
-    const charPerMinute = 300; 
+    const charPerMinute = 300;
     const msPerChar = 60000 / charPerMinute;
     const duration = content.length * msPerChar;
-    
+
     // Add some randomness (+- 20%) to make it look more natural
     const variance = duration * 0.2;
     const finalDuration = Math.max(1000, duration + (Math.random() * variance * 2 - variance)); // Minimum 1 second
 
     await this.sendTyping();
     // Cap the waiting time at 10 seconds (Discord typing status timeout)
-    await new Promise(r => setTimeout(r, Math.min(finalDuration, 10000))); 
+    await new Promise(r => setTimeout(r, Math.min(finalDuration, 10000)));
   }
 
   /**
