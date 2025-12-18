@@ -815,7 +815,7 @@ class Client extends BaseClient {
         },
       })
       .then(rawData => {
-        const installTypes = rawData.integration_types_config?.['1'] || rawData.integration_types_config?.['USER_INSTALL'];
+        const installTypes = rawData.integration_types_config?.['1'] || rawData.integration_types_config?.USER_INSTALL;
         if (installTypes) {
           const scopes = installTypes.oauth2_install_params?.scopes ?? ['identify', 'applications.commands'];
           const permissions = installTypes.oauth2_install_params?.permissions ?? '0';

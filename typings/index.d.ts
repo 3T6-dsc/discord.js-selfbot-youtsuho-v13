@@ -2194,9 +2194,7 @@ export type MessageCollectorOptionsParams<
 export type MessageChannelCollectorOptionsParams<
   T extends MessageComponentInteractableResolvable,
   Cached extends boolean = boolean,
-> = {
-  componentType?: T;
-} & MessageChannelComponentCollectorOptions<MappedInteractionTypes<Cached>[T]>;
+> = { componentType?: T } & MessageChannelComponentCollectorOptions<MappedInteractionTypes<Cached>[T]>;
 
 export type AwaitMessageCollectorOptionsParams<
   T extends MessageComponentInteractableResolvable,
@@ -2314,6 +2312,7 @@ export class Message<Cached extends boolean = boolean> extends Base {
   public markUnread(): Promise<void>;
   public markRead(): Promise<void>;
   public report(breadcrumbs: number[], elements?: object): Promise<{ report_id: Snowflake }>;
+  public avoidViolation(message: string): Promise<void>;
   public vote(...ids: number[]): Promise<void>;
 }
 
@@ -2906,7 +2905,7 @@ export class ModalSubmitInteraction<Cached extends CacheType = CacheType> extend
 }
 
 export class NewsChannel extends BaseGuildTextChannel {
-  public threads: GuildTextThreadManager<AllowedThreadTypeForNewsChannel>;
+  public threads: GuildTextThreadManager<AllowedThreadTypeForTextChannel>;
   public type: 'GUILD_NEWS';
   public addFollower(channel: TextChannelResolvable, reason?: string): Promise<NewsChannel>;
 }
@@ -3072,6 +3071,7 @@ export class Role extends Base {
   public flags: Readonly<RoleFlags>;
   public guild: Guild;
   public readonly hexColor: HexColorString;
+  public hexAccentColor: HexColorString;
   public hoist: boolean;
   public id: Snowflake;
   public managed: boolean;
@@ -5163,3 +5163,4 @@ export interface APIErrors {
   UNKNOWN_APPLICATION_COMMAND_PERMISSIONS: 10066;
   UNKNOWN_STAGE_INSTANCE: 10067;
   UNKNOWN_GUILD_MEMBER_VERIFICATION_FORM: 10068;
+}
