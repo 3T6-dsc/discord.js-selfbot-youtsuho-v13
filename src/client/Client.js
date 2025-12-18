@@ -138,7 +138,7 @@ class Client extends BaseClient {
      * A manager of the presences belonging to this client
      * @type {PresenceManager}
      */
-    this.presences = new PresenceManager(this);
+    this.presences = new PresenceManager(this.client);
 
     /**
      * All of the note that have been cached at any point, mapped by their ids
@@ -802,8 +802,8 @@ class Client extends BaseClient {
   }
 
   /**
-   * Install User Apps
-   * @param {Snowflake} applicationId  Discord Application id
+   * Install User Apps (Integration Type 1)
+   * @param {Snowflake} applicationId Discord Application id
    * @returns {Promise<void>}
    */
   installUserApps(applicationId) {
@@ -815,12 +815,27 @@ class Client extends BaseClient {
         },
       })
       .then(rawData => {
-        const installTypes = rawData.integration_types_config['1'];
+        const installTypes = rawData.integration_types_config?.['1'] || rawData.integration_types_config?.['USER_INSTALL'];
         if (installTypes) {
+          const scopes = installTypes.oauth2_install_params?.scopes ?? ['identify', 'applications.commands'];
+          const permissions = installTypes.oauth2_install_params?.permissions ?? '0';
           return this.api.oauth2.authorize.post({
             query: {
               client_id: applicationId,
-              scope: installTypes.oauth2_install_params.scopes.join(' '),
+              scope: scopes.join(' '),
+            },
+            data: {
+              permissions: permissions.toString(),
+              authorize: true,
+              integration_type: 1, // User Install
+            },
+          });
+        } else {
+          // Fallback if no specific config but the app is public
+          return this.api.oauth2.authorize.post({
+            query: {
+              client_id: applicationId,
+              scope: 'identify applications.commands',
             },
             data: {
               permissions: '0',
@@ -828,8 +843,6 @@ class Client extends BaseClient {
               integration_type: 1,
             },
           });
-        } else {
-          return false;
         }
       });
   }
@@ -957,14 +970,3 @@ class Client extends BaseClient {
 }
 
 module.exports = Client;
-
-/**
- * Emitted for general warnings.
- * @event Client#warn
- * @param {string} info The warning
- */
-
-/**
- * @external Collection
- * @see {@link https://discord.js.org/docs/packages/collection/stable/Collection:Class}
- */

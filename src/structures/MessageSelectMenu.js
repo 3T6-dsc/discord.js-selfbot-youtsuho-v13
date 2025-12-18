@@ -15,35 +15,16 @@ class MessageSelectMenu extends BaseMessageComponent {
    * @property {string} [placeholder] Custom placeholder text to display when nothing is selected
    * @property {number} [minValues] The minimum number of selections required
    * @property {number} [maxValues] The maximum number of selections allowed
-   * @property {MessageSelectOption[]} [options] Options for the select menu
+   * @property {MessageSelectOption[]} [options] Options for the select menu (Only for STRING_SELECT)
    * @property {boolean} [disabled=false] Disables the select menu to prevent interactions
    * @property {ChannelType[]} [channelTypes] List of channel types to include in the ChannelSelect component
-   */
-
-  /**
-   * @typedef {Object} MessageSelectOption
-   * @property {string} label The text to be displayed on this option
-   * @property {string} value The value to be sent for this option
-   * @property {?string} description Optional description to show for this option
-   * @property {?RawEmoji} emoji Emoji to display for this option
-   * @property {boolean} default Render this option as the default selection
-   */
-
-  /**
-   * @typedef {Object} MessageSelectOptionData
-   * @property {string} label The text to be displayed on this option
-   * @property {string} value The value to be sent for this option
-   * @property {string} [description] Optional description to show for this option
-   * @property {EmojiIdentifierResolvable} [emoji] Emoji to display for this option
-   * @property {boolean} [default] Render this option as the default selection
    */
 
   /**
    * @param {MessageSelectMenu|MessageSelectMenuOptions} [data={}] MessageSelectMenu to clone or raw data
    */
   constructor(data = {}) {
-    super({ type: BaseMessageComponent.resolveType(data.type) ?? 'STRING_SELECT' });
-
+    super({ type: data.type ? BaseMessageComponent.resolveType(data.type) : 'STRING_SELECT' });
     this.setup(data);
   }
 
@@ -74,25 +55,32 @@ class MessageSelectMenu extends BaseMessageComponent {
     this.maxValues = data.max_values ?? data.maxValues ?? null;
 
     /**
-     * Options for the STRING_SELECT menu
-     * @type {MessageSelectOption[]}
-     */
-    this.options = this.constructor.normalizeOptions(data.options ?? []);
-
-    /**
      * Whether this select menu is currently disabled
      * @type {boolean}
      */
     this.disabled = data.disabled ?? false;
 
-    /**
-     * Channels that are possible to select in CHANNEL_SELECT menu
-     * @type {ChannelType[]}
-     */
-    this.channelTypes =
-      data.channel_types?.map(channelType =>
-        typeof channelType === 'string' ? channelType : ChannelTypes[channelType],
-      ) ?? [];
+    // Type specific fields
+    const type = MessageComponentTypes[this.type] ?? this.type;
+
+    if (type === MessageComponentTypes.STRING_SELECT) {
+      /**
+       * Options for the STRING_SELECT menu
+       * @type {MessageSelectOption[]}
+       */
+      this.options = this.constructor.normalizeOptions(data.options ?? []);
+    }
+
+    if (type === MessageComponentTypes.CHANNEL_SELECT) {
+      /**
+       * Channels that are possible to select in CHANNEL_SELECT menu
+       * @type {ChannelType[]}
+       */
+      this.channelTypes =
+        data.channel_types?.map(channelType =>
+          typeof channelType === 'string' ? channelType : ChannelTypes[channelType],
+        ) ?? [];
+    }
   }
 
   /**
@@ -100,16 +88,26 @@ class MessageSelectMenu extends BaseMessageComponent {
    * @returns {APIMessageSelectMenu} The raw data of this select menu
    */
   toJSON() {
-    return {
-      channel_types: this.channelTypes.map(type => (typeof type === 'string' ? ChannelTypes[type] : type)),
+    const type = MessageComponentTypes[this.type] ?? this.type;
+    const raw = {
+      type,
       custom_id: this.customId,
       disabled: this.disabled,
       placeholder: this.placeholder,
       min_values: this.minValues,
-      max_values: this.maxValues ?? (this.minValues ? this.options.length : undefined),
-      options: this.options,
-      type: typeof this.type === 'string' ? MessageComponentTypes[this.type] : this.type,
+      max_values: this.maxValues,
     };
+
+    if (type === MessageComponentTypes.STRING_SELECT) {
+      raw.options = this.options;
+      if (!raw.max_values && this.minValues) raw.max_values = this.options.length;
+    }
+
+    if (type === MessageComponentTypes.CHANNEL_SELECT) {
+      raw.channel_types = this.channelTypes?.map(t => (typeof t === 'number' ? t : ChannelTypes[t]));
+    }
+
+    return raw;
   }
 
   /**
