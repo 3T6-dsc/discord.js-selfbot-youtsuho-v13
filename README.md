@@ -108,8 +108,3 @@ Github Discussion: [Here](https://github.com/3T6-dsc/discord.js-selfbot-youtsuho
 
 ## Credits
 - [Discord.js](https://github.com/discordjs/discord.js)
-
-## <strong>Other project(s)
-
-- 📘 [***aiko-chan-ai/DiscordBotClient***](https://github.com/aiko-chan-ai/DiscordBotClient) <br/>
-  A patched version of discord, with bot login support
